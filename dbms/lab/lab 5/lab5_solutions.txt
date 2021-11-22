@@ -1,0 +1,127 @@
+1: 
+
+mysql> select sname,student.age as age
+    -> from student where major = "English"
+    -> or snum in(select snum from enrolled where
+    -> cname in (select name from class where
+    -> fid in (select fid from faculty
+    -> where faculty.fname = "Ivana Teach" )));
++--------------------+------+
+| sname              | age  |
++--------------------+------+
+| Maria White        |   21 |
+| Joseph Thompson    |   19 |
+| Christopher Garcia |   20 |
+| Lisa Walker        |   17 |
+| Paul Hall          |   18 |
+| Ana Lopez          |   19 |
++--------------------+------+
+6 rows in set (0.00 sec)
+
+
+2 : 
+
+mysql> select name
+    -> from class where class.room = "R128"
+    -> or class.name in(select class.name from class, enrolled
+    -> where class.name = enrolled.cname
+    -> group by class.name
+    -> having count(snum) < 3);
++----------------------------+
+| name                       |
++----------------------------+
+| Air Quality Engineering    |
+| American Political Parties |
+| Archaeology of the Incas   |
+| Communication Networks     |
+| Dairy Herd Management      |
+| Data Structures            |
+| Introduction to Math       |
+| Optical Electronics        |
+| Patent Law                 |
+| Perception                 |
+| Social Cognition           |
+| Urban Economics            |
++----------------------------+
+12 rows in set (0.01 sec)
+
+3:
+mysql> select age,level
+    -> from student
+    -> group by age
+    -> order by level desc
+    -> ;
++------+-------+
+| age  | level |
++------+-------+
+|   21 | SR    |
+|   22 | SR    |
+|   19 | SO    |
+|   18 | SO    |
+|   20 | JR    |
+|   17 | FR    |
++------+-------+
+6 rows in set (0.01 sec)
+
+4:
+
+mysql> select distinct faculty.fname
+    -> from faculty,class,enrolled
+    -> where class.name like 'O%' and class.fid = faculty.fid and class.room = 'R15' and class.name in (select cname from enrolled);
++----------------+
+| fname          |
++----------------+
+| Patricia Jones |
++----------------+
+1 row in set (0.00 sec)
+
+5:
+mysql> select student.sname
+    -> from student ,enrolled,class
+    -> where class.room = 'R15' and class.name  = enrolled.cname  and enrolled.snum = student.snum;
++----------------+
+| sname          |
++----------------+
+| Kenneth Hill   |
+| Luis Hernandez |
+| Juan Rodriguez |
++----------------+
+3 rows in set (0.00 sec)
+
+6:mysql> select distinct class.name
+    -> from class,enrolled
+    -> where class.name = enrolled.cname and class.name like 'O%s' or class.name like 'A%s'
+    -> and class.name not in (select cname from enrolled);
++--------------------------+
+| name                     |
++--------------------------+
+| Archaeology of the Incas |
+| Optical Electronics      |
++--------------------------+
+2 rows in set (0.00 sec)
+
+7:mysql> select faculty.fid,faculty.fname,count(class.fid)
+    -> from faculty left outer join class
+    -> on faculty.fid = class.fid
+    -> group by faculty.fid;
++-----------+------------------+------------------+
+| fid       | fname            | count(class.fid) |
++-----------+------------------+------------------+
+|  11564812 | John Williams    |                3 |
+|  90873519 | Elizabeth Taylor |                2 |
+| 141582651 | Mary Johnson     |                1 |
+| 142519864 | Ivana Teach      |                1 |
+| 159542516 | William Moore    |                1 |
+| 242518965 | James Smith      |                0 |
+| 248965255 | Barbara Wilson   |                2 |
+| 254099823 | Patricia Jones   |                1 |
+| 287321212 | Michael Miller   |                0 |
+| 356187925 | Robert Brown     |                1 |
+| 486512566 | David Anderson   |                0 |
+| 489221823 | Richard Jackson  |                6 |
+| 489456522 | Linda Davis      |                2 |
+| 548977562 | Ulysses Teach    |                0 |
+| 619023588 | Jennifer Thomas  |                1 |
++-----------+------------------+------------------+
+15 rows in set (0.01 sec)
+

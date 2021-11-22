@@ -1,0 +1,125 @@
+mysql> create database lab_exam;
+Query OK, 1 row affected (0.08 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| information_schema |
+| lab_exam           |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.07 sec)
+
+
+mysql> use lab_exam
+Database changed
+
+mysql> create table Employees(
+    -> person_name varchar(40),
+    -> person_id int primary key,
+    -> supervisor_name varchar(40));
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> insert into Employees (person_name,person_id,supervisor_name) values
+    -> ('R',2021001,'A'),
+    -> ('A',2021002,'SHANTANU'),
+    -> ('SHANTANU',1901182,'M'),
+    -> ('M',2021004,null),
+    -> ('X',2021007,null);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> create table Account (
+    -> person_name varchar(40),
+    -> city varchar(40),
+    -> No_distributors int );
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_lab_exam |
++--------------------+
+| account            |
+| employees          |
++--------------------+
+2 rows in set (0.01 sec)
+
+mysql> insert into Account (person_name,city,No_distributors) values
+    -> ('R','Hyderabad',10),
+    -> ('M','Chennai',5),
+    -> ('A','Kolkata','4'),
+    -> ('A','Kolkata','4'),^C
+mysql> insert into Account (person_name,city,No_distributors) values
+    -> ('R','Hyderabad',10),
+    -> ('M','Chennai',5),
+    -> ('A','Kolkata',4),
+    -> ('SHANTANU','Guwahati',4);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 
+
+mysql> select * from Employees;
++-------------+-----------+-----------------+
+| person_name | person_id | supervisor_name |
++-------------+-----------+-----------------+
+| SHANTANU    |   1901182 | M               |
+| R           |   2021001 | A               |
+| A           |   2021002 | SHANTANU        |
+| M           |   2021004 | NULL            |
+| X           |   2021007 | NULL            |
++-------------+-----------+-----------------+
+5 rows in set (0.01 sec)
+
+mysql> select * from account;
++-------------+-----------+-----------------+
+| person_name | city      | No_distributors |
++-------------+-----------+-----------------+
+| R           | Hyderabad |              10 |
+| M           | Chennai   |               5 |
+| A           | Kolkata   |               4 |
+| SHANTANU    | Guwahati  |               4 |
++-------------+-----------+-----------------+
+4 rows in set (0.00 sec)
+
+mysql> select person_name,person_id from Employees where person_name =
+    -> (select supervisor_name from Employees where person_name = 'A');
++-------------+-----------+
+| person_name | person_id |
++-------------+-----------+
+| SHANTANU    |   1901182 |
++-------------+-----------+
+1 row in set (0.01 sec)
+
+
+
+mysql> select t1.supervisor_name, t2.supervisor_name, t3.supervisor_name from employees as t1 inner join (employees as t2 inner join employees as t3 on(t2.supervisor_name = t3.person_name)) on (t1.supervisor_name = t2.person_name) where t1.person_name = 'R';
++-----------------+-----------------+-----------------+
+| supervisor_name | supervisor_name | supervisor_name |
++-----------------+-----------------+-----------------+
+| A               | SHANTANU        | M               |
++-----------------+-----------------+-----------------+
+1 row in set (0.00 sec)
+
+
+mysql> select person_name,person_id from Employees where person_name =
+    -> (select person_name from Account where No_distributors =
+    -> (select No_distributors from Account where person_name = 'SHANTANU') and
+    -> person_name != 'SHANTANU');
++-------------+-----------+
+| person_name | person_id |
++-------------+-----------+
+| A           |   2021002 |s
++-------------+-----------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+https://meet.google.com/kmc-ukgb-maf
+https://meet.google.com/kmc-ukgb-maf

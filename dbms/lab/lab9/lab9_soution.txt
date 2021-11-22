@@ -1,0 +1,120 @@
+_______________________________________________________________ Alter cmds _____________________________________________________________________
+
+
+ALTER TABLE STUDENTS ADD total_credits INT DEFAULT 0;
+
+ALTER TABLE CLASS ADD credits INT;
+
+UPDATE ENROLLED SET GRADE =  NULL;
+
+
+UPDATE CLASS SET CREDITS = 3 WHERE NAME = 'Data Structures';
+UPDATE CLASS SET CREDITS = 4 WHERE NAME = 'Database Systems';
+UPDATE CLASS SET CREDITS = 5 WHERE NAME = 'Operating System Design';
+UPDATE CLASS SET CREDITS = 4 WHERE NAME = 'Archaeology of the Incas';
+UPDATE CLASS SET CREDITS = 2 WHERE NAME = 'Aviation Accident Investigation';
+UPDATE CLASS SET CREDITS = 4 WHERE NAME = 'Air Quality Engineering';
+UPDATE CLASS SET CREDITS = 3 WHERE NAME = 'Introductory Latin';
+UPDATE CLASS SET CREDITS = 4 WHERE NAME = 'American Political Parties';
+UPDATE CLASS SET CREDITS = 4 WHERE NAME = 'Social Cognition';
+UPDATE CLASS SET CREDITS = 3 WHERE NAME = 'Perception';
+UPDATE CLASS SET CREDITS = 4 WHERE NAME = 'Multivariate Analysis';
+UPDATE CLASS SET CREDITS = 3 WHERE NAME = 'Patent Law';
+UPDATE CLASS SET CREDITS = 2 WHERE NAME = 'Urban Economics';
+UPDATE CLASS SET CREDITS = 4 WHERE NAME = 'Organic Chemistry';
+UPDATE CLASS SET CREDITS = 4 WHERE NAME = 'Marketing Research';
+UPDATE CLASS SET CREDITS = 4 WHERE NAME = 'Seminar in American Art';
+UPDATE CLASS SET CREDITS = 3 WHERE NAME = 'Orbital Mechanics';
+UPDATE CLASS SET CREDITS = 2 WHERE NAME = 'Dairy Herd Management';
+UPDATE CLASS SET CREDITS = 3 WHERE NAME = 'Communication Networks';
+UPDATE CLASS SET CREDITS = 4 WHERE NAME = 'Optical Electronics';
+UPDATE CLASS SET CREDITS = 5 WHERE NAME = 'Introducti1on to Math';
+
+________________________________________________________TRIGGER__________________________________________________________________________________
+
+
+delimiter //
+CREATE TRIGGER after_employee_update 
+AFTER UPDATE ON enrolled
+FOR EACH ROW
+
+begin
+
+	UPDATE STUDENTS SET total_credits = total_credits + 
+	(SELECT CREDITS FROM CLASS C WHERE C.NAME = OLD.CNAME) 
+	WHERE (SNUM = OLD.SNUM) AND 
+	(NEW.GRADE != 'F' AND NEW.GRADE is not NULL) AND
+	(OLD.GRADE = 'F' OR OLD.GRADE is NULL);
+
+	UPDATE STUDENTS SET total_credits = total_credits - 
+	(SELECT CREDITS FROM CLASS C WHERE C.NAME = OLD.CNAME) 
+	WHERE (SNUM = OLD.SNUM) AND 
+	(OLD.GRADE != 'F' AND OLD.GRADE is not NULL) AND
+	(NEW.GRADE = 'F' OR NEW.GRADE is NULL);
+
+end
+
+
+//
+delimiter ;
+
+_________________________________________________________ enrolled update _______________________________________________________________________
+
+UPDATE enrolled SET GRADE = 'A' WHERE SNUM = 112348546 AND CNAME = 'Database Systems';
+UPDATE enrolled SET GRADE = 'B' WHERE SNUM = 115987938 AND CNAME = 'Database Systems';
+UPDATE enrolled SET GRADE = 'F' WHERE SNUM = 348121549 AND CNAME = 'Database Systems';
+UPDATE enrolled SET GRADE = NULL WHERE SNUM = 322654189 AND CNAME = 'Database Systems';
+UPDATE enrolled SET GRADE = 'C' WHERE SNUM = 552455318 AND CNAME = 'Database Systems';
+UPDATE enrolled SET GRADE = 'A' WHERE SNUM = 455798411 AND CNAME = 'Operating System Design';
+UPDATE enrolled SET GRADE = 'A' WHERE SNUM = 552455318 AND CNAME = 'Operating System Design';
+UPDATE enrolled SET GRADE = 'B' WHERE SNUM = 567354612 AND CNAME = 'Operating System Design';
+UPDATE enrolled SET GRADE = 'C' WHERE SNUM = 112348546 AND CNAME = 'Operating System Design';
+UPDATE enrolled SET GRADE = 'F' WHERE SNUM = 115987938 AND CNAME = 'Operating System Design';
+UPDATE enrolled SET GRADE = 'F' WHERE SNUM = 322654189 AND CNAME = 'Operating System Design';
+UPDATE enrolled SET GRADE = 'F' WHERE SNUM = 567354612 AND CNAME = 'Data Structures';
+UPDATE enrolled SET GRADE = 'F' WHERE SNUM = 552455318 AND CNAME = 'Communication Networks';
+UPDATE enrolled SET GRADE = 'F' WHERE SNUM = 455798411 AND CNAME = 'Optical Electronics';
+UPDATE enrolled SET GRADE = 'A' WHERE SNUM = 301221823 AND CNAME = 'Perception';
+UPDATE enrolled SET GRADE = 'B' WHERE SNUM = 301221823 AND CNAME = 'Social Cognition';
+UPDATE enrolled SET GRADE = 'C' WHERE SNUM = 301221823 AND CNAME = 'American Political Parties';
+UPDATE enrolled SET GRADE = 'D' WHERE SNUM = 556784565 AND CNAME = 'Air Quality Engineering';
+UPDATE enrolled SET GRADE = 'A' WHERE SNUM = 099354543 AND CNAME = 'Patent Law';
+UPDATE enrolled SET GRADE = 'F' WHERE SNUM = 574489456 AND CNAME = 'Urban Economics';
+
+
+_________________________________________________________  students _______________________________________________________________________
+
+
+
++-----------+--------------------+------------------------+-------+------+---------------+
+| snum      | sname              | major                  | level | age  | total_credits |
++-----------+--------------------+------------------------+-------+------+---------------+
+|  51135593 | Maria White        | English                | SR    |   21 |             0 |
+|  60839453 | Charles Harris     | Architecture           | SR    |   22 |             0 |
+|  99354543 | Susan Martin       | Law                    | JR    |   20 |             3 |
+| 112348546 | Joseph Thompson    | Computer Science       | SO    |   19 |             9 |
+| 115987938 | Christopher Garcia | Computer Science       | JR    |   20 |             4 |
+| 132977562 | Angela Martinez    | History                | SR    |   20 |             0 |
+| 269734834 | Thomas Robinson    | Psychology             | SO    |   18 |             0 |
+| 280158572 | Margaret Clark     | Animal Science         | FR    |   18 |             0 |
+| 301221823 | Juan Rodriguez     | Psychology             | JR    |   20 |            11 |
+| 318548912 | Dorthy Lewis       | Finance                | FR    |   18 |             0 |
+| 320874981 | Daniel Lee         | Electrical Engineering | FR    |   17 |             0 |
+| 322654189 | Lisa Walker        | Computer Science       | SO    |   17 |             0 |
+| 348121549 | Paul Hall          | Computer Science       | JR    |   18 |             0 |
+| 351565322 | Nancy Allen        | Accounting             | JR    |   19 |             0 |
+| 451519864 | Mark Young         | Finance                | FR    |   18 |             0 |
+| 455798411 | Luis Hernandez     | Electrical Engineering | FR    |   17 |             5 |
+| 462156489 | Donald King        | Mechanical Engineering | SO    |   19 |             0 |
+| 550156548 | George Wright      | Education              | SR    |   21 |             0 |
+| 552455318 | Ana Lopez          | Computer Engineering   | SR    |   19 |             9 |
+| 556784565 | Kenneth Hill       | Civil Engineering      | SR    |   21 |             4 |
+| 567354612 | Karen Scott        | Computer Engineering   | FR    |   18 |             5 |
+| 573284895 | Steven Green       | Kinesiology            | SO    |   19 |             0 |
+| 574489456 | Betty Adams        | Economics              | JR    |   20 |             0 |
+| 578875478 | Edward Baker       | Veterinary Medicine    | SR    |   21 |             0 |
++-----------+--------------------+------------------------+-------+------+---------------+
+
+
+
+

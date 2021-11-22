@@ -1,0 +1,22 @@
+1:
+
+State Space  : 3 Missionaries and 3 Cannibals , 1 boat
+
+Initial State : All missionaries   and cannibals   are on  right side 
+
+Successor function  : Move boat containing  2 on other bank
+
+Goal : move all missionaries and cannibals on other bank
+
+
+
+
+2 :
+
+State Space : 1 uncolored map and 4 colors
+
+Initial state  : No Region is colored
+
+Successor function  : Color a uncolored region 
+
+Goal Test : All the regions are colored and no  adjacent regions are of same color

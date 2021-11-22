@@ -1,0 +1,40 @@
+insert into seller values
+(1001, "Shantanu",	"Raj",	9999999991),
+(1002	,"Shubham",	"Jhawar",	9999999992),
+(1003	,"Ritik",	"Rakesh",	9999999993),
+(1004	,"Karan",	"Kishore",	9999999994),
+(1005	,"Shashank",	"Pandey",	9999999995),
+(1006	,"Vivek",	"Pandit",	9999999996),
+(1007	,"Maitri",	"Agrawal",	9999999997),
+(1008	,"Soppa",	"Rafi",	999999998),
+(1009	,"Dawood"	,"Jhawar",	999999999),
+(1010	,"Rahul"	,"Das",	9999999910);
+
+
+
+
+
+ insert into agent (a_id , firstname , lastname , is_admin , contact ) values
+     ( 1 , 'aman' , 'kushwaha' , 0 , 1234569870),
+     (2 , 'aman' ,'jain' , 0 , 1234567890) ,
+     (3 , 'anil','kumar',0 , 1233467098) ,
+     (4 , 'arun' , 'sidana' ,0 , 4567890123) ,
+     (5 , 'vaibhav' , 'jhawar' ,1 , 6969690012 ) ,
+     (6 , 'shubham' , 'goel' , 0 , 1265489078 ) ,
+     (7 , 'sanu' , 'ranjan' , 0 , 2345678917 ) ,
+     ( 8 , 'rahul' , 'patel' , 0 , 9178654326 ) ,
+     (9 , 'pritam' , 'agrawal' , 0 ,9835651234 ) ,
+     (10 ,'palak' , 'musk' , 0 , 9867895436 ) ;
+
+
+Insert into buyer Values
+       (501,"Sunil","Shetty",8247839258),
+     (502,"Akshay","Khanna",9440763605),
+     (503,"Johnny","Khalifa",8742041471),
+     (504,"Ratan","Birla",9807654321),
+     (505,"Mia","Adam",9440763607),
+     (506,"Mukesh","Adani",8742045678),
+     (507,"Rahul","Modi",8742041356),
+     (508,"amit","ganguly",9876543210),
+     (509,"Mamta","Modiy",8907654321),
+     (510,"Gajab","Topibz",7896543211);

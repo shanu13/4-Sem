@@ -1,0 +1,279 @@
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> show tables
+    -> ;
+ERROR 1046 (3D000): No database selected
+mysql> show table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> use college
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| faculty           |
+| student           |
++-------------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Student(snum,sname,major,level,age)VALUES
+     (051135593,Maria White,English,SR,21),
+     (060839453,Charles Harris,Architecture,SR,22),
+     (099354543,Susan Martin,Law,JR,20),
+     (112348546,Joseph Thompson,Computer Science,SO,19),
+     (115987938,Christopher Garcia,Computer Science,JR,20),
+     (132977562,Angela Martinez,History,SR,20),
+     (269734834,Thomas Robinson,Psychology,SO,18),
+     (280158572,Margaret Clark,Animal Science,FR,18),
+     (301221823,Juan Rodriguez,Psychology,JR,20),
+     (318548912,Dorthy Lewis,Finance,FR,18),
+     (320874981,Daniel Lee,Electrical Engineering,FR,17),
+     (322654189,Lisa Walker,Computer Science,SO,17),
+     (348121549,Paul Hall,Computer Science,JR,18),
+     (351565322,Nancy Allen,Accounting,JR,19),
+     (451519864,Mark Young,Finance,FR,18),
+     (455798411,Luis Hernandez,Electrical Engineering,FR,17),
+     (462156489,Donald King,Mechanical Engineering,SO,19),
+     (550156548,George Wright,Education,SR,21),
+     (552455318,Ana Lopez,Computer Engineering,SR,19),
+     (556784565,Kenneth Hill,Civil Engineering,SR,21),
+     (567354612,Karen Scott,Computer Engineering,FR,18),
+     (573284895,Steven Green,Kinesiology,SO,19),
+     (574489456,Betty Adams,Economics,JR,20),
+     (578875478,Edward Baker,Veterinary Medicine,SR,21);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'White,English,SR,21),
+(060839453,Charles Harris,Architecture,SR,22),
+(099354543,' at line 2
+mysql> INSERT INTO Student(snum,sname,major,level,age)VALUES
+     (051135593,'Maria White','English','SR',21),
+     (060839453,'Charles Harris','Architecture','SR',22),
+     (099354543,'Susan Martin','Law','JR',20),
+     (112348546,'Joseph Thompson','Computer Science','SO',19),
+     (115987938,'Christopher Garcia','Computer Science','JR',20),
+     (132977562,'Angela Martinez','History','SR',20),
+     (269734834,'Thomas Robinson','Psychology','SO',18),
+     (280158572,'Margaret Clark','Animal Science','FR',18),
+     (301221823,'Juan Rodriguez','Psychology','JR',20),
+     (318548912,'Dorthy Lewis','Finance','FR',18),
+     (320874981,'Daniel Lee','Electrical Engineering','FR',17),
+     (322654189,'Lisa Walker','Computer Science','SO',17),
+     (348121549,'Paul Hall','Computer Science','JR',18),
+     (351565322,'Nancy Allen','Accounting','JR',19),
+     (451519864,'Mark Young','Finance','FR',18),
+     (455798411,'Luis Hernandez','Electrical Engineering','FR',17),
+     (462156489,'Donald King','Mechanical Engineering','SO',19),
+     (550156548,'George Wright','Education','SR',21),
+     (552455318,'Ana Lopez','Computer Engineering','SR',19),
+     (556784565,'Kenneth Hill','Civil Engineering','SR',21),
+     (567354612,'Karen Scott','Computer Engineering','FR',18),
+    -> (573284895,'Steven Green','Kinesiology','SO',19),
+     (574489456,'Betty Adams','Economics','JR',20),
+     (578875478,'Edward Baker','Veterinary Medicine','SR',21);
+ERROR 1406 (22001): Data too long for column 'major' at row 11
+mysql> select * from Student
+    -> ;
+Empty set (0.01 sec)
+
+mysql> describes Student
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'describes Student' at line 1
+mysql> describe Student;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| snum  | int         | YES  |     | NULL    |       |
+| sname | varchar(30) | YES  |     | NULL    |       |
+| major | varchar(20) | YES  |     | NULL    |       |
+| level | varchar(15) | YES  |     | NULL    |       |
+| age   | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> alter table Student
+    -> modify major varchar(40);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe Student
+    -> ;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| snum  | int         | YES  |     | NULL    |       |
+| sname | varchar(30) | YES  |     | NULL    |       |
+| major | varchar(40) | YES  |     | NULL    |       |
+| level | varchar(15) | YES  |     | NULL    |       |
+| age   | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO Student(snum,sname,major,level,age)VALUES
+     (051135593,'Maria White','English','SR',21),
+     (060839453,'Charles Harris','Architecture','SR',22),
+     (099354543,'Susan Martin','Law','JR',20),
+     (112348546,'Joseph Thompson','Computer Science','SO',19),
+     (115987938,'Christopher Garcia','Computer Science','JR',20),
+     (132977562,'Angela Martinez','History','SR',20),
+     (269734834,'Thomas Robinson','Psychology','SO',18),
+     (280158572,'Margaret Clark','Animal Science','FR',18),
+     (301221823,'Juan Rodriguez','Psychology','JR',20),
+     (318548912,'Dorthy Lewis','Finance','FR',18),
+     (320874981,'Daniel Lee','Electrical Engineering','FR',17),
+     (322654189,'Lisa Walker','Computer Science','SO',17),
+     (348121549,'Paul Hall','Computer Science','JR',18),
+     (351565322,'Nancy Allen','Accounting','JR',19),
+     (451519864,'Mark Young','Finance','FR',18),
+     (455798411,'Luis Hernandez','Electrical Engineering','FR',17),
+     (462156489,'Donald King','Mechanical Engineering','SO',19),
+     (550156548,'George Wright','Education','SR',21),
+     (552455318,'Ana Lopez','Computer Engineering','SR',19),
+     (556784565,'Kenneth Hill','Civil Engineering','SR',21),
+     (567354612,'Karen Scott','Computer Engineering','FR',18),
+     (573284895,'Steven Green','Kinesiology','SO',19),
+     (574489456,'Betty Adams','Economics','JR',20),
+     (578875478,'Edward Baker','Veterinary Medicine','SR',21);
+Quer OK, 24 rows affected (0.01 sec)
+Records: 24  Duplicates: 0  Warnings: 0
+
+mysql> select * from Student
+    -> ;
++-----------+--------------------+------------------------+-------+------+
+| snum      | sname              | major                  | level | age  |
++-----------+--------------------+------------------------+-------+------+
+|  51135593 | Maria White        | English                | SR    |   21 |
+|  60839453 | Charles Harris     | Architecture           | SR    |   22 |
+|  99354543 | Susan Martin       | Law                    | JR    |   20 |
+| 112348546 | Joseph Thompson    | Computer Science       | SO    |   19 |
+| 115987938 | Christopher Garcia | Computer Science       | JR    |   20 |
+| 132977562 | Angela Martinez    | History                | SR    |   20 |
+| 269734834 | Thomas Robinson    | Psychology             | SO    |   18 |
+| 280158572 | Margaret Clark     | Animal Science         | FR    |   18 |
+| 301221823 | Juan Rodriguez     | Psychology             | JR    |   20 |
+| 318548912 | Dorthy Lewis       | Finance                | FR    |   18 |
+| 320874981 | Daniel Lee         | Electrical Engineering | FR    |   17 |
+| 322654189 | Lisa Walker        | Computer Science       | SO    |   17 |
+| 348121549 | Paul Hall          | Computer Science       | JR    |   18 |
+| 351565322 | Nancy Allen        | Accounting             | JR    |   19 |
+| 451519864 | Mark Young         | Finance                | FR    |   18 |
+| 455798411 | Luis Hernandez     | Electrical Engineering | FR    |   17 |
+| 462156489 | Donald King        | Mechanical Engineering | SO    |   19 |
+| 550156548 | George Wright      | Education              | SR    |   21 |
+| 552455318 | Ana Lopez          | Computer Engineering   | SR    |   19 |
+| 556784565 | Kenneth Hill       | Civil Engineering      | SR    |   21 |
+| 567354612 | Karen Scott        | Computer Engineering   | FR    |   18 |
+| 573284895 | Steven Green       | Kinesiology            | SO    |   19 |
+| 574489456 | Betty Adams        | Economics              | JR    |   20 |
+| 578875478 | Edward Baker       | Veterinary Medicine    | SR    |   21 |
++-----------+--------------------+------------------------+-------+------+
+24 rows in set (0.00 sec)
+
+mysql> INSERT INTO Faculty(fid,fname,deptid)VALUES
+     (142519864,'Ivana Teach',20),
+     (242518965,'James Smith',68),
+     (141582651,'Mary Johnson',20),
+     (011564812,'John Williams',68),
+     (254099823,'Patricia Jones',68),
+     (356187925,'Robert Brown',12),
+     (489456522,'Linda Davis',20),
+     (287321212,'Michael Miller',12),
+     (248965255,'Barbara Wilson',12),
+     (159542516,'William Moore',33),
+     (090873519,'Elizabeth Taylor',11),
+     (486512566,'David Anderson',20),
+     (619023588,'Jennifer Thomas',11),
+     (489221823,'Richard Jackson',33),
+     (548977562,'Ulysses Teach',20);
+Query OK, 15 rows affected (0.03 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> select * from Faculty
+    -> ;
++-----------+------------------+--------+
+| fid       | fname            | deptid |
++-----------+------------------+--------+
+| 142519864 | Ivana Teach      |     20 |
+| 242518965 | James Smith      |     68 |
+| 141582651 | Mary Johnson     |     20 |
+|  11564812 | John Williams    |     68 |
+| 254099823 | Patricia Jones   |     68 |
+| 356187925 | Robert Brown     |     12 |
+| 489456522 | Linda Davis      |     20 |
+| 287321212 | Michael Miller   |     12 |
+| 248965255 | Barbara Wilson   |     12 |
+| 159542516 | William Moore    |     33 |
+|  90873519 | Elizabeth Taylor |     11 |
+| 486512566 | David Anderson   |     20 |
+| 619023588 | Jennifer Thomas  |     11 |
+| 489221823 | Richard Jackson  |     33 |
+| 548977562 | Ulysses Teach    |     20 |
++-----------+------------------+--------+
+15 rows in set (0.00 sec)
+
+mysql> select snum,sname,age from Student where major = "Computer Engineering";
++-----------+-------------+------+
+| snum      | sname       | age  |
++-----------+-------------+------+
+| 552455318 | Ana Lopez   |   19 |
+| 567354612 | Karen Scott |   18 |
++-----------+-------------+------+
+2 rows in set (0.00 sec)
+
+mysql> select snum from Student where age<=20;
++-----------+
+| snum      |
++-----------+
+|  99354543 |
+| 112348546 |
+| 115987938 |
+| 132977562 |
+| 269734834 |
+| 280158572 |
+| 301221823 |
+| 318548912 |
+| 320874981 |
+| 322654189 |
+| 348121549 |
+| 351565322 |
+| 451519864 |
+| 455798411 |
+| 462156489 |
+| 552455318 |
+| 567354612 |
+| 573284895 |
+| 574489456 |
++-----------+
+19 rows in set (0.00 sec)
+
+mysql> select sname,level from Student where major="Psychology" OR "Computer Engineering" AND age=18;
++-----------------+-------+
+| sname           | level |
++-----------------+-------+
+| Thomas Robinson | SO    |
+| Juan Rodriguez  | JR    |
++-----------------+-------+
+2 rows in set, 1 warning (0.01 sec)
+
+mysql> select fname from Faculty where deptid=18 OR deptid=12;
++----------------+
+| fname          |
++----------------+
+| Robert Brown   |
+| Michael Miller |
+| Barbara Wilson |
++----------------+
+3 rows in set (0.00 sec)

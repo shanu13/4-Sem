@@ -1,0 +1,151 @@
+1: BFS
+
+ol = {s}
+two nodes generated on expanding S => A,D
+
+ol = {A,D}
+On expanding A=> B,E are genertaed
+
+ol = {D,B,E}
+on expanding D=> C,F are generated
+
+ol = {B,E,C,F}
+on expanding B=> E,C node which are alreday in open list
+
+ol {E,C,F}
+on exapnding E => G is generated ,hence we get goal node
+
+number of nodes generated = 7 
+number of nodes expanded  = 5
+
+path  S->A->E->G
+cost 1+15+3 = 19
+
+
+
+
+
+
+2: DFS 
+
+ol = {S}
+on expanding S => A,D are generated 
+
+ol = {A,D}
+on exapnding A => B,E generated
+
+ol = {E,B,D}
+on expanding E we get G , goal node
+
+number of nodes generated = 5
+number of nodes expanded = 3
+
+path S->A->E->G
+cost  = 1+15+3 = 19
+
+
+
+
+3: Itteratve Deeping
+
+depth=0
+ol = {s}
+cl = {},
+
+ol ={}
+cl ={s}
+
+terminate with failure
+
+depth = 1 
+
+ol = {S}
+cl = {}
+
+ol = {A,D}
+cl = {S}
+
+ol = {}
+cl ={A,D}
+
+terminate with failure
+
+depth = 2
+
+ol = {S}
+cl = {}
+
+on expanding S
+
+ol = {A,D}
+cl= {S}
+
+on expanding A
+ol = {B,E,D}
+cl ={A,S}
+
+
+ol = {D}
+cl = {B,E,A,S}
+
+on expanding D
+
+ol = {C,F}
+cl = {D,B,E,D,S}
+
+ol = {}
+cl = {C,F,B,E,D,S}
+terminate with failure
+
+depth = 3
+
+ol = {S}
+cl = {}
+
+ol ={A,D}
+cl = {S}
+
+ol = {E,B,D}
+cl = {A,S}
+
+ol ={G,B,D}
+cl = {E,A,S}
+
+we get goal node
+terminate with success
+
+number of nodes generated = 13
+number of nodes expanded = 
+
+path = S->A->E->G 
+cost  = 19
+
+
+
+4: UCS
+
+ol = {s}
+cl = {}
+
+ol = {A^1, D^10}
+cl = {S}
+
+ol = {D^10,E^16,B^21}
+cl = {S,A^1}
+
+ol = {C^11,F^15,E^16,B^21}
+cl = {D^10,A^1,S}
+
+OL = {G^13,F^13,A^13,e^16,B^21}
+CL = {C^11,D^10,S}
+
+OL = {F^13,A^13,E^16,B^21}
+CL = {G^13,C^11,D^10,S}
+
+terminate with success 
+
+Nmber of nodes generated = 10
+number of nodes expanded = 4
+
+path S->D->C->G
+cost = 13

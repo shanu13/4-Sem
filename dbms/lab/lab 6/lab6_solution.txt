@@ -1,0 +1,104 @@
+1:
+mysql> select f.fname,f.fid
+    -> from faculty f
+    -> where f.fid in (select fid from class
+    -> group by fid having count(*)=(select count(distinct room ) from class));
++-----------------+-----------+
+| fname           | fid       |
++-----------------+-----------+
+| Richard Jackson | 489221823 |
++-----------------+-----------+
+1 row in set (0.01 sec)
+
+
+2:mysql> select fname from faculty f
+    -> natural join class group by f.fid
+    -> having count(name) = (select min(no) from (select count(name) as no
+    -> from faculty natural join class group by fid) as classesCount);
++-----------------+
+| fname           |
++-----------------+
+| Mary Johnson    |
+| Ivana Teach     |
+| William Moore   |
+| Patricia Jones  |
+| Robert Brown    |
+| Jennifer Thomas |
++-----------------+
+
+3:
+mysql> select sname from student where student.snum not in ( select enrolled.snum from enrolled);
++-----------------+
+| sname           |
++-----------------+
+| Maria White     |
+| Charles Harris  |
+| Angela Martinez |
+| Thomas Robinson |
+| Margaret Clark  |
+| Dorthy Lewis    |
+| Daniel Lee      |
+| Nancy Allen     |
+| Mark Young      |
+| Donald King     |
+| George Wright   |
+| Steven Green    |
+| Edward Baker    |
++-----------------+
+13 rows in set (0.01 sec)
+ 
+4:
+mysql> select name from class where room in (select room  from class group by room having count(*) >=5) ;
++--------------------------+
+| name                     |
++--------------------------+
+| Air Quality Engineering  |
+| Archaeology of the Incas |
+| Dairy Herd Management    |
+| Data Structures          |
+| Introduction to Math     |
+| Multivariate Analysis    |
+| Optical Electronics      |
+| Patent Law               |
+| Seminar in American Art  |
+| Social Cognition         |
++--------------------------+
+10 rows in set (0.00 sec)
+
+5:
+
+mysql> select meets_at from class
+    ->      where name like 'D%' and
+    ->      name in ( select cname from enrolled group by cname having count(snum) >=2);
++----------------+
+| meets_at       |
++----------------+
+| MWF 12:30-1:45 |
++----------------+
+1 row in set (0.02 sec)
+
+
+6:mysql> select * from student where age > 20 and major like "% Engineering" and level = "SR";
++-----------+--------------+-------------------+-------+------+
+| snum      | sname        | major             | level | age  |
++-----------+--------------+-------------------+-------+------+
+| 556784565 | Kenneth Hill | Civil Engineering | SR    |   21 |
++-----------+--------------+-------------------+-------+------+
+1 row in set (0.00 sec)
+
+7:
+mysql> select sname from student
+        where snum in ( select snum from enrolled where enrolled.cname in
+          (select cname from enrolled left join class
+    on enrolled.cname = class.name group by fid having count(snum)<=2));
++----------------+
+| sname          |
++----------------+
+| Susan Martin   |
+| Juan Rodriguez |
+| Luis Hernandez |
+| Ana Lopez      |
+| Kenneth Hill   |
++----------------+
+5 rows in set (0.01 sec)
+

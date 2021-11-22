@@ -1,0 +1,36 @@
+delimiter //
+
+create function stu_count(inst_name varchar(40)) returns integer DETERMINISTIC
+begin
+declare s_count integer;
+select count(snum) into s_count from enrolled where cname in (select name from class natural join faculty where fname like inst_name );
+return s_count;
+end//
+
+select fname from faculty where stu_count(fname)>1;//
+
++-----------------+
+| fname           |
++-----------------+
+| Ivana Teach     |
+| Richard Jackson |
+| Linda Davis     |
++-----------------+
+
+
+create function stu_f_count(course_name varchar(40)) returns integer DETERMINISTIC
+begin
+declare s_f_count integer;
+select count(snum) into s_f_count from enrolled where grade = 'F' and cname = course_name;
+return s_f_count;
+end//
+
+select distinct fname from faculty natural join class where stu_f_count(name)>1;//
+
++-------------+
+| fname       |
++-------------+
+| Linda Davis |
++-------------+
+
+delimiter ;
